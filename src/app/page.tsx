@@ -4,8 +4,8 @@ import Preloader from '@/components/Preloader'
 import CustomCursor from '@/components/CustomCursor'
 import HotelNav from '@/components/HotelNav'
 import HotelHero from '@/components/HotelHero'
-import HotelRooms from '@/components/HotelRooms'
 import Marquee from '@/components/Marquee'
+import InteractiveSelector from '@/components/ui/interactive-selector'
 import HotelAmenities from '@/components/HotelAmenities'
 import HotelGallery from '@/components/HotelGallery'
 import HotelTestimonials from '@/components/HotelTestimonials'
@@ -30,8 +30,10 @@ export default function Home() {
       {/* Marquee */}
       <Marquee />
       
-      {/* Rooms Section */}
-      <HotelRooms />
+      {/* Interactive Experiences Selector - Awwwards Style */}
+      <div id="rooms">
+        <InteractiveSelector />
+      </div>
       
       {/* Amenities - Horizontal Scroll */}
       <HotelAmenities />

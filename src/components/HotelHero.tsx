@@ -145,12 +145,12 @@ export default function HotelHero() {
         </div>
 
         {/* Main Title */}
-        <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-light tracking-[0.15em] text-white mb-6" style={{ perspective: '1000px' }}>
+        <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-light tracking-[0.15em] text-white mb-6 whitespace-nowrap" style={{ perspective: '1000px' }}>
           HOTEL KEUR GUI
         </h1>
 
         {/* Subtitle */}
-        <p className="hero-subtitle text-lg md:text-xl lg:text-2xl text-white/70 font-light tracking-[0.3em] uppercase mb-12">
+        <p className="hero-subtitle text-lg md:text-xl lg:text-2xl text-white/70 font-light tracking-[0.3em] uppercase mb-12 whitespace-nowrap">
           L&apos;Art de l&apos;Hospitalité Sénégalaise
         </p>
 

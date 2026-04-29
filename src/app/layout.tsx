@@ -19,7 +19,10 @@ export const metadata: Metadata = {
   keywords: ["hôtel luxe Dakar", "hôtel 5 étoiles Sénégal", "Keur Gui", "spa hôtel Afrique", "séjour luxe Sénégal"],
   authors: [{ name: "Hotel Keur Gui" }],
   icons: {
-    icon: "/logo.svg",
+    icon: [
+      { url: "/favicon.png", sizes: "1024x1024", type: "image/png" },
+    ],
+    apple: "/favicon.png",
   },
   openGraph: {
     title: "Hotel Keur Gui | Hôtel de Luxe 5 Étoiles",

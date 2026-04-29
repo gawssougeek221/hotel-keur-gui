@@ -94,6 +94,17 @@ export default function HotelFooter() {
             <a href="#" className="hover:text-white/60 transition-colors">Conditions</a>
           </div>
         </div>
+
+        {/* Creator Credit */}
+        <div className="mt-8 pt-6 border-t border-white/5 text-center">
+          <p className="text-white/40 text-xs">
+            Créé par{' '}
+            <span className="text-amber-400 font-medium">Keur&apos;Geek Digital</span>
+            {' '}— Startup spécialisée en{' '}
+            <span className="text-white/60">IA</span> et{' '}
+            <span className="text-white/60">solutions digitales</span> pour les PME du Sénégal
+          </p>
+        </div>
       </div>
     </footer>
   )

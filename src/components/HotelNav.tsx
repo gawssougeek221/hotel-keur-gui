@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -10,13 +12,14 @@ export default function HotelNav() {
   const navRef = useRef<HTMLElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   useGSAP(() => {
     gsap.from(navRef.current, {
       y: -100,
       opacity: 0,
       duration: 1,
-      delay: 3, // After preloader
+      delay: 0.5, // Faster for inner pages
       ease: 'power3.out'
     })
   }, { scope: navRef })
@@ -28,11 +31,16 @@ export default function HotelNav() {
   }, [])
 
   const navLinks = [
-    { name: 'Chambres', href: '#rooms' },
-    { name: 'Équipements', href: '#amenities' },
-    { name: 'Galerie', href: '#gallery' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Chambres', href: '/chambres' },
+    { name: 'Restaurant', href: '/restaurant' },
+    { name: 'Galerie', href: '/galerie' },
+    { name: 'Contact', href: '/#contact' }
   ]
+
+  const isActive = (href: string) => {
+    if (href === '/' || href === '/#contact') return pathname === '/'
+    return pathname === href
+  }
 
   return (
     <nav 
@@ -45,26 +53,30 @@ export default function HotelNav() {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="group flex items-center gap-3" data-cursor-text="Accueil">
+        <Link href="/" className="group flex items-center gap-3" data-cursor-text="Accueil">
           <div className="w-10 h-10 border border-amber-400/50 flex items-center justify-center text-amber-400 font-light text-lg group-hover:bg-amber-400 group-hover:text-black transition-all duration-300">
             K
           </div>
           <div className="hidden sm:block">
             <span className="text-white font-light tracking-[0.2em]">KEUR GUI</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-10">
           {navLinks.map((link) => (
-            <a 
+            <Link 
               key={link.name}
               href={link.href}
-              className="text-white/60 hover:text-white text-xs tracking-[0.2em] uppercase transition-colors relative group"
+              className={`text-xs tracking-[0.2em] uppercase transition-colors relative group ${
+                isActive(link.href) ? 'text-amber-400' : 'text-white/60 hover:text-white'
+              }`}
             >
               {link.name}
-              <span className="absolute -bottom-2 left-0 w-0 h-px bg-amber-400 group-hover:w-full transition-all duration-300" />
-            </a>
+              <span className={`absolute -bottom-2 left-0 h-px bg-amber-400 transition-all duration-300 ${
+                isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+              }`} />
+            </Link>
           ))}
         </div>
 
@@ -96,14 +108,16 @@ export default function HotelNav() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-6">
           {navLinks.map((link) => (
-            <a 
+            <Link 
               key={link.name}
               href={link.href}
-              className="text-white/60 hover:text-white text-sm tracking-[0.2em] uppercase transition-colors"
+              className={`text-sm tracking-[0.2em] uppercase transition-colors ${
+                isActive(link.href) ? 'text-amber-400' : 'text-white/60 hover:text-white'
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
           <button className="mt-4 w-full py-4 border border-amber-400/50 text-amber-400 text-xs tracking-[0.2em] uppercase">
             Réserver

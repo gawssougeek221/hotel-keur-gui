@@ -25,18 +25,18 @@ const galleryItems = [
   { id: 2, src: '/images/room2.jpg', category: 'rooms', title: 'Chambre Supérieure', subtitle: 'Design sénégalais' },
   { id: 3, src: '/images/room3.jpg', category: 'rooms', title: 'Suite Junior', subtitle: 'Luxe intemporel' },
   { id: 4, src: '/images/room4.jpg', category: 'rooms', title: 'Suite Présidentielle', subtitle: 'Excellence absolue' },
-  { id: 5, src: '/images/restaurant.jpg', category: 'restaurant', title: 'Notre Restaurant', subtitle: 'Saveurs du Sénégal' },
-  { id: 6, src: '/images/spa.jpg', category: 'spa', title: 'SPA Keur Gui', subtitle: 'Détente absolue' },
-  { id: 7, src: '/images/pool.jpg', category: 'spa', title: 'Piscine', subtitle: 'Vue sur Dakar' },
+  { id: 5, src: '/images/restaurant.png', category: 'restaurant', title: 'Notre Restaurant', subtitle: 'Saveurs du Sénégal' },
+  { id: 6, src: '/images/spa.png', category: 'spa', title: 'SPA Keur Gui', subtitle: 'Détente absolue' },
+  { id: 7, src: '/images/pool.png', category: 'spa', title: 'Piscine', subtitle: 'Vue sur Dakar' },
   { id: 8, src: '/images/hotel-exterior.jpg', category: 'exterior', title: 'Façade', subtitle: 'Architecture moderne' },
   { id: 9, src: '/images/lobby.jpg', category: 'exterior', title: 'Lobby', subtitle: 'Accueil premium' },
   { id: 10, src: '/images/garden.jpg', category: 'exterior', title: 'Jardins', subtitle: 'Oasis urbain' },
   { id: 11, src: '/images/event1.jpg', category: 'events', title: 'Salle de conférence', subtitle: 'Équipée' },
   { id: 12, src: '/images/event2.jpg', category: 'events', title: 'Espace mariage', subtitle: 'Magique' },
   { id: 13, src: '/images/terrace.jpg', category: 'restaurant', title: 'Terrasse', subtitle: 'Ambiance nocturne' },
-  { id: 14, src: '/images/bar.jpg', category: 'restaurant', title: 'Bar Lounge', subtitle: 'Cocktails locaux' },
+  { id: 14, src: '/images/bar.png', category: 'restaurant', title: 'Bar Lounge', subtitle: 'Cocktails locaux' },
   { id: 15, src: '/images/spa-treatment.jpg', category: 'spa', title: 'Soin massage', subtitle: 'Relaxation' },
-  { id: 16, src: '/images/roof.jpg', category: 'exterior', title: ' Rooftop', subtitle: 'Vue panoramique' },
+  { id: 16, src: '/images/roof.jpg', category: 'exterior', title: 'Rooftop', subtitle: 'Vue panoramique' },
 ]
 
 export default function GaleriePage() {
@@ -125,7 +125,7 @@ export default function GaleriePage() {
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-30"
             style={{
-              backgroundImage: 'url(/images/gallery-hero.jpg)',
+              backgroundImage: 'url(/images/hotel-exterior.jpg)',
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a] via-[#0a0e1a]/80 to-[#0a0e1a]" />

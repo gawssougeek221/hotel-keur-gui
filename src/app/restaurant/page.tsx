@@ -145,7 +145,7 @@ export default function RestaurantPage() {
           <div 
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: 'url(/images/restaurant.jpg)',
+              backgroundImage: 'url(/images/restaurant.png)',
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a] via-[#0a0e1a]/60 to-[#0a0e1a]" />

@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { Magnetic, RevealText, FadeIn, Float } from '@/components/MicroAnimations'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -13,7 +14,7 @@ export default function HotelHero() {
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
-    // Title character animation (manual split since SplitText needs plugin)
+    // Title character animation
     const title = document.querySelector('.hero-title')
     if (title) {
       const text = title.textContent || ''
@@ -95,6 +96,17 @@ export default function HotelHero() {
       }
     })
 
+    // Glow pulse on decorative elements
+    gsap.to('.glow-element', {
+      opacity: 0.3,
+      scale: 1.2,
+      duration: 2,
+      ease: 'power1.inOut',
+      yoyo: true,
+      repeat: -1,
+      stagger: 0.3
+    })
+
   }, { scope: heroRef })
 
   return (
@@ -112,11 +124,15 @@ export default function HotelHero() {
 
       {/* Floating decorative elements */}
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        <div className="float-element absolute top-32 left-[15%] w-2 h-2 bg-amber-400 rounded-full" />
-        <div className="float-element absolute top-48 right-[20%] w-3 h-3 bg-emerald-400 rounded-full" />
-        <div className="float-element absolute bottom-40 left-[25%] w-2 h-2 bg-amber-400/60 rounded-full" />
-        <div className="float-element absolute top-1/3 right-[10%] w-24 h-24 border border-amber-400/10 rotate-45" />
-        <div className="float-element absolute bottom-1/4 left-[10%] w-32 h-32 border border-emerald-400/10 rounded-full" />
+        <div className="float-element glow-element absolute top-32 left-[15%] w-2 h-2 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50" />
+        <div className="float-element glow-element absolute top-48 right-[20%] w-3 h-3 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50" />
+        <div className="float-element absolute bottom-40 left-[25%] w-2 h-2 bg-white/40 rounded-full" />
+        <div className="float-element absolute top-1/3 right-[10%] w-24 h-24 border border-amber-400/20 rotate-45" />
+        <div className="float-element absolute bottom-1/4 left-[10%] w-32 h-32 border border-amber-400/10 rounded-full" />
+        
+        {/* Animated lines */}
+        <div className="absolute top-1/4 left-0 w-32 h-px bg-gradient-to-r from-amber-400/0 via-amber-400/30 to-amber-400/0 animate-pulse" />
+        <div className="absolute bottom-1/3 right-0 w-48 h-px bg-gradient-to-r from-amber-400/0 via-amber-400/20 to-amber-400/0 animate-pulse" />
       </div>
 
       {/* Content */}
@@ -140,29 +156,29 @@ export default function HotelHero() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button 
-            data-magnetic
-            data-cursor-text="Réserver"
-            className="hero-cta group relative px-10 py-4 overflow-hidden"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 transition-transform duration-300 group-hover:scale-100 scale-x-0 origin-left" />
-            <span className="relative z-10 text-black font-semibold tracking-wider text-sm uppercase">
-              Réserver
-            </span>
-          </button>
+          <Magnetic strength={0.3}>
+            <button 
+              className="hero-cta group relative px-10 py-4 overflow-hidden"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 transition-transform duration-300 group-hover:scale-100 scale-x-0 origin-left" />
+              <span className="relative z-10 text-black font-semibold tracking-wider text-sm uppercase">
+                Réserver
+              </span>
+            </button>
+          </Magnetic>
           
-          <button 
-            data-magnetic
-            data-cursor-text="Explorer"
-            className="hero-cta group flex items-center gap-3 px-8 py-4 border border-white/30 hover:border-amber-400/50 transition-colors"
-          >
-            <span className="text-white/80 group-hover:text-white text-sm tracking-wider uppercase transition-colors">
-              Explorer
-            </span>
-            <svg className="w-4 h-4 text-amber-400 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
+          <Magnetic strength={0.2}>
+            <button 
+              className="hero-cta group flex items-center gap-3 px-8 py-4 border border-white/30 hover:border-amber-400/50 transition-colors"
+            >
+              <span className="text-white/80 group-hover:text-white text-sm tracking-wider uppercase transition-colors">
+                Explorer
+              </span>
+              <svg className="w-4 h-4 text-amber-400 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+          </Magnetic>
         </div>
       </div>
 

@@ -1,52 +1,56 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Bed, Crown, Diamond, Sparkles, UtensilsCrossed } from 'lucide-react'
+import { Magnetic } from '@/components/MicroAnimations'
+import { useSound } from '@/components/SoundProvider'
 
-const InteractiveSelector = () => {
+const options = [
+  {
+    title: "Chambre Deluxe",
+    description: "Élégance sénégalaise avec vue jardin",
+    image: "/images/hotel/deluxe-room.png",
+    icon: <Bed size={24} className="text-amber-400" />,
+    price: "150,000 CFA"
+  },
+  {
+    title: "Suite Executive",
+    description: "Luxe contemporain face à l'Atlantique",
+    image: "/images/hotel/executive-suite.png",
+    icon: <Crown size={24} className="text-amber-400" />,
+    price: "250,000 CFA"
+  },
+  {
+    title: "Présidentielle",
+    description: "L'excellence absolue avec piscine privée",
+    image: "/images/hotel/presidential-suite.png",
+    icon: <Diamond size={24} className="text-amber-400" />,
+    price: "500,000 CFA"
+  },
+  {
+    title: "Spa & Bien-être",
+    description: "Rituels sénégalais et soins signature",
+    image: "/images/hotel/spa.png",
+    icon: <Sparkles size={24} className="text-amber-400" />,
+    price: "Sur réservation"
+  },
+  {
+    title: "Gastronomie",
+    description: "Cuisine sénégalaise raffinée",
+    image: "/images/hotel/restaurant.png",
+    icon: <UtensilsCrossed size={24} className="text-amber-400" />,
+    price: "Menu 35,000 CFA"
+  }
+]
+
+export default function InteractiveSelector() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [animatedOptions, setAnimatedOptions] = useState<number[]>([])
+  const { playSound } = useSound()
   
-  const options = [
-    {
-      title: "Chambre Deluxe",
-      description: "Élégance sénégalaise avec vue jardin",
-      image: "/images/hotel/deluxe-room.png",
-      icon: <Bed size={24} className="text-amber-400" />,
-      price: "150,000 CFA"
-    },
-    {
-      title: "Suite Executive",
-      description: "Luxe contemporain face à l'Atlantique",
-      image: "/images/hotel/executive-suite.png",
-      icon: <Crown size={24} className="text-amber-400" />,
-      price: "250,000 CFA"
-    },
-    {
-      title: "Présidentielle",
-      description: "L'excellence absolue avec piscine privée",
-      image: "/images/hotel/presidential-suite.png",
-      icon: <Diamond size={24} className="text-amber-400" />,
-      price: "500,000 CFA"
-    },
-    {
-      title: "Spa & Bien-être",
-      description: "Rituels sénégalais et soins signature",
-      image: "/images/hotel/spa.png",
-      icon: <Sparkles size={24} className="text-amber-400" />,
-      price: "Sur réservation"
-    },
-    {
-      title: "Gastronomie",
-      description: "Cuisine sénégalaise raffinée",
-      image: "/images/hotel/restaurant.png",
-      icon: <UtensilsCrossed size={24} className="text-amber-400" />,
-      price: "Menu 35,000 CFA"
-    }
-  ]
-
   const handleOptionClick = (index: number) => {
     if (index !== activeIndex) {
+      playSound('whoosh')
       setActiveIndex(index)
     }
   }
@@ -78,6 +82,10 @@ const InteractiveSelector = () => {
           }}
         />
       </div>
+
+      {/* Animated background orbs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-amber-400/5 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-amber-400/3 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
       {/* Header Section */}
       <div className="w-full max-w-2xl px-6 mb-4 text-center relative z-10">
@@ -117,7 +125,7 @@ const InteractiveSelector = () => {
               borderColor: activeIndex === index ? 'rgba(212, 175, 55, 0.8)' : 'rgba(212, 175, 55, 0.1)',
               backgroundColor: '#0a0e1a',
               boxShadow: activeIndex === index 
-                ? '0 20px 60px rgba(0,0,0,0.50)' 
+                ? '0 20px 60px rgba(212, 175, 55, 0.15), 0 0 100px rgba(212, 175, 55, 0.1)' 
                 : '0 10px 30px rgba(0,0,0,0.30)',
               flex: activeIndex === index ? '7 1 0%' : '1 1 0%',
               zIndex: activeIndex === index ? 10 : 1,
@@ -129,7 +137,19 @@ const InteractiveSelector = () => {
               willChange: 'flex-grow, box-shadow, background-size, background-position'
             }}
             onClick={() => handleOptionClick(index)}
+            onMouseEnter={() => playSound('hover')}
           >
+            {/* Animated gradient overlay */}
+            <div 
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none"
+              style={{
+                background: activeIndex === index 
+                  ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%)' 
+                  : 'none',
+                opacity: activeIndex === index ? 1 : 0
+              }}
+            />
+            
             {/* Shadow effect */}
             <div 
               className="shadow absolute left-0 right-0 pointer-events-none transition-all duration-700 ease-in-out"
@@ -145,10 +165,11 @@ const InteractiveSelector = () => {
             {/* Label with icon and info */}
             <div className="label absolute left-0 right-0 bottom-5 flex items-center justify-start h-12 z-2 pointer-events-none px-4 gap-3 w-full">
               <div 
-                className="icon min-w-[44px] max-w-[44px] h-[44px] flex items-center justify-center rounded-full backdrop-blur-md shadow-lg flex-shrink-0 flex-grow-0 transition-all duration-200"
+                className="icon min-w-[44px] max-w-[44px] h-[44px] flex items-center justify-center rounded-full backdrop-blur-md shadow-lg flex-shrink-0 flex-grow-0 transition-all duration-300"
                 style={{
                   backgroundColor: 'rgba(10, 14, 26, 0.85)',
-                  border: '2px solid rgba(212, 175, 55, 0.3)'
+                  border: activeIndex === index ? '2px solid rgba(212, 175, 55, 0.8)' : '2px solid rgba(212, 175, 55, 0.3)',
+                  transform: activeIndex === index ? 'scale(1.1)' : 'scale(1)'
                 }}
               >
                 {option.icon}
@@ -167,7 +188,8 @@ const InteractiveSelector = () => {
                   className="sub text-sm text-white/50 transition-all duration-700 ease-in-out"
                   style={{
                     opacity: activeIndex === index ? 1 : 0,
-                    transform: activeIndex === index ? 'translateX(0)' : 'translateX(25px)'
+                    transform: activeIndex === index ? 'translateX(0)' : 'translateX(25px)',
+                    transitionDelay: '0.05s'
                   }}
                 >
                   {option.description}
@@ -176,27 +198,37 @@ const InteractiveSelector = () => {
                   className="price text-amber-400 text-sm mt-1 transition-all duration-700 ease-in-out"
                   style={{
                     opacity: activeIndex === index ? 1 : 0,
-                    transform: activeIndex === index ? 'translateX(0)' : 'translateX(25px)'
+                    transform: activeIndex === index ? 'translateX(0)' : 'translateX(25px)',
+                    transitionDelay: '0.1s'
                   }}
                 >
                   {option.price}
                 </div>
               </div>
             </div>
+
+            {/* Corner accent */}
+            <div 
+              className="absolute top-4 right-4 w-8 h-8 border-t border-r transition-all duration-500"
+              style={{
+                borderColor: activeIndex === index ? 'rgba(212, 175, 55, 0.5)' : 'transparent'
+              }}
+            />
           </div>
         ))}
       </div>
 
       {/* CTA Button */}
       <div className="mt-12 relative z-10">
-        <button 
-          className="px-8 py-3 border border-amber-400/50 text-amber-400 text-sm tracking-[0.2em] uppercase hover:bg-amber-400 hover:text-black transition-all duration-300"
-        >
-          Réserver Maintenant
-        </button>
+        <Magnetic strength={0.3}>
+          <button 
+            className="px-8 py-3 border border-amber-400/50 text-amber-400 text-sm tracking-[0.2em] uppercase hover:bg-amber-400 hover:text-black transition-all duration-300"
+            onClick={() => playSound('click')}
+          >
+            Réserver Maintenant
+          </button>
+        </Magnetic>
       </div>
     </section>
   )
 }
-
-export default InteractiveSelector

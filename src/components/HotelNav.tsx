@@ -105,7 +105,7 @@ export default function HotelNav() {
               <Link 
                 key={link.name}
                 href={link.href}
-                className={`nav-link-item group relative px-5 py-3 transition-all duration-300 ${
+                className={`nav-link-item group relative px-5 py-3 transition-all duration-300 whitespace-nowrap ${
                   isActive(link.href) ? 'opacity-100' : 'opacity-70 hover:opacity-100'
                 }`}
               >
@@ -138,7 +138,7 @@ export default function HotelNav() {
             {/* Contact link */}
             <Link 
               href="/#contact"
-              className="nav-link-item text-sm text-white/50 hover:text-amber-400 transition-colors duration-300 tracking-wider"
+              className="nav-link-item text-sm text-white/50 hover:text-amber-400 transition-colors duration-300 tracking-wider whitespace-nowrap"
             >
               Contact
             </Link>

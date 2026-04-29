@@ -17,19 +17,53 @@ export default function Preloader() {
       }
     })
 
-    // Counter animation
-    tl.to('.counter', {
-      textContent: 100,
-      duration: 2.5,
-      ease: 'power2.inOut',
-      snap: { textContent: 1 },
-      onUpdate: function() {
-        const counter = document.querySelector('.counter')
-        if (counter) {
-          counter.textContent = Math.round(Number(this.targets()[0].textContent)) + '%'
-        }
-      }
+    // Home icon morphing animation - draw the path
+    tl.from('.home-icon-path', {
+      strokeDashoffset: 1000,
+      duration: 2,
+      ease: 'power2.inOut'
     }, 0)
+
+    // Home icon fill animation
+    tl.to('.home-icon-path', {
+      fillOpacity: 1,
+      duration: 0.8,
+      ease: 'power2.out'
+    }, '-=0.5')
+
+    // Roof animation
+    tl.from('.home-roof', {
+      scale: 0,
+      rotation: -180,
+      transformOrigin: 'center center',
+      duration: 1,
+      ease: 'elastic.out(1, 0.5)'
+    }, 0.3)
+
+    // Door animation
+    tl.from('.home-door', {
+      scaleY: 0,
+      transformOrigin: 'bottom center',
+      duration: 0.6,
+      ease: 'power3.out'
+    }, 1.2)
+
+    // Windows animation with stagger
+    tl.from('.home-window', {
+      scale: 0,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.5,
+      ease: 'back.out(1.7)'
+    }, 1.4)
+
+    // Pulse glow effect
+    tl.to('.home-icon-container', {
+      boxShadow: '0 0 60px rgba(212, 175, 55, 0.6), 0 0 100px rgba(212, 175, 55, 0.3)',
+      duration: 0.5,
+      yoyo: true,
+      repeat: 2
+    }, '-=0.3')
 
     // Text reveal animation
     tl.from('.preloader-text .char', {
@@ -39,12 +73,12 @@ export default function Preloader() {
       stagger: 0.04,
       duration: 1,
       ease: 'power4.out'
-    }, 0)
+    }, 0.5)
 
     // Line animation
     tl.to('.preloader-line-inner', {
       scaleX: 1,
-      duration: 2.5,
+      duration: 2,
       ease: 'power2.inOut'
     }, 0)
 
@@ -90,9 +124,102 @@ export default function Preloader() {
       <div className="absolute bottom-32 right-20 w-32 h-32 border border-emerald-400/20 rounded-full animate-pulse" />
       <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-amber-400/5 rotate-12" />
 
-      {/* Counter */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-thin text-amber-400/10 pointer-events-none select-none tabular-nums">
-        <span className="counter">0%</span>
+      {/* Morphing Home Icon */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        <div className="home-icon-container w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center transition-all duration-500">
+          <svg 
+            viewBox="0 0 100 100" 
+            className="w-24 h-24 md:w-32 md:h-32"
+            fill="none"
+          >
+            {/* Main house shape */}
+            <path 
+              className="home-icon-path"
+              d="M50 15 L85 45 L85 85 L15 85 L15 45 Z"
+              stroke="rgba(212, 175, 55, 0.15)"
+              strokeWidth="2"
+              fill="rgba(212, 175, 55, 0.05)"
+              style={{ fillOpacity: 0 }}
+            />
+            
+            {/* Roof */}
+            <path 
+              className="home-roof"
+              d="M10 48 L50 12 L90 48"
+              stroke="#d4af37"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+            
+            {/* Door */}
+            <rect 
+              className="home-door"
+              x="40" 
+              y="55" 
+              width="20" 
+              height="30"
+              fill="#d4af37"
+              rx="2"
+            />
+            
+            {/* Door handle */}
+            <circle 
+              cx="54" 
+              cy="72" 
+              r="2" 
+              fill="#0a0e1a"
+              className="home-door"
+            />
+            
+            {/* Left window */}
+            <rect 
+              className="home-window"
+              x="22" 
+              y="55" 
+              width="12" 
+              height="12"
+              fill="#d4af37"
+              rx="1"
+            />
+            
+            {/* Right window */}
+            <rect 
+              className="home-window"
+              x="66" 
+              y="55" 
+              width="12" 
+              height="12"
+              fill="#d4af37"
+              rx="1"
+            />
+            
+            {/* Window crosses - left */}
+            <line x1="28" y1="55" x2="28" y2="67" stroke="#0a0e1a" strokeWidth="1.5" className="home-window" />
+            <line x1="22" y1="61" x2="34" y2="61" stroke="#0a0e1a" strokeWidth="1.5" className="home-window" />
+            
+            {/* Window crosses - right */}
+            <line x1="72" y1="55" x2="72" y2="67" stroke="#0a0e1a" strokeWidth="1.5" className="home-window" />
+            <line x1="66" y1="61" x2="78" y2="61" stroke="#0a0e1a" strokeWidth="1.5" className="home-window" />
+            
+            {/* Chimney */}
+            <rect 
+              x="65" 
+              y="22" 
+              width="8" 
+              height="15"
+              fill="#d4af37"
+              rx="1"
+              className="home-window"
+            />
+            
+            {/* Smoke animation circles */}
+            <circle className="smoke-1" cx="69" cy="15" r="3" fill="rgba(212, 175, 55, 0.3)" />
+            <circle className="smoke-2" cx="72" cy="10" r="2" fill="rgba(212, 175, 55, 0.2)" />
+            <circle className="smoke-3" cx="68" cy="5" r="2.5" fill="rgba(212, 175, 55, 0.15)" />
+          </svg>
+        </div>
       </div>
 
       {/* Main content */}

@@ -48,41 +48,41 @@
 
 :root {
   --radius: 0.625rem;
-  /* Hotel Luxury Theme - Dark Emerald & Gold */
+  /* Hotel Keur Gui - Luxury Dark Theme */
   --background: #0a0e1a;
   --foreground: #f8fafc;
   --card: rgba(15, 25, 45, 0.8);
   --card-foreground: #f8fafc;
   --popover: #0f1629;
   --popover-foreground: #f8fafc;
-  --primary: #10b981;
+  --primary: #d4af37;
   --primary-foreground: #0a0e1a;
-  --secondary: rgba(16, 185, 129, 0.15);
-  --secondary-foreground: #10b981;
+  --secondary: rgba(212, 175, 55, 0.15);
+  --secondary-foreground: #d4af37;
   --muted: rgba(248, 250, 252, 0.1);
   --muted-foreground: #94a3b8;
   --accent: #d4af37;
   --accent-foreground: #0a0e1a;
   --destructive: #ef4444;
-  --border: rgba(16, 185, 129, 0.2);
+  --border: rgba(212, 175, 55, 0.2);
   --input: rgba(248, 250, 252, 0.1);
-  --ring: #10b981;
+  --ring: #d4af37;
   --luxury-gold: #d4af37;
   --luxury-emerald: #10b981;
   --luxury-dark: #0a0e1a;
-  --chart-1: #10b981;
-  --chart-2: #d4af37;
-  --chart-3: #4ade80;
+  --chart-1: #d4af37;
+  --chart-2: #10b981;
+  --chart-3: #fbbf24;
   --chart-4: #22c55e;
-  --chart-5: #fbbf24;
+  --chart-5: #f59e0b;
   --sidebar: #0f1629;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #10b981;
+  --sidebar-primary: #d4af37;
   --sidebar-primary-foreground: #0a0e1a;
-  --sidebar-accent: rgba(16, 185, 129, 0.15);
-  --sidebar-accent-foreground: #10b981;
-  --sidebar-border: rgba(16, 185, 129, 0.2);
-  --sidebar-ring: #10b981;
+  --sidebar-accent: rgba(212, 175, 55, 0.15);
+  --sidebar-accent-foreground: #d4af37;
+  --sidebar-border: rgba(212, 175, 55, 0.2);
+  --sidebar-ring: #d4af37;
 }
 
 .dark {
@@ -92,18 +92,18 @@
   --card-foreground: #f8fafc;
   --popover: #0f1629;
   --popover-foreground: #f8fafc;
-  --primary: #10b981;
+  --primary: #d4af37;
   --primary-foreground: #0a0e1a;
-  --secondary: rgba(16, 185, 129, 0.15);
-  --secondary-foreground: #10b981;
+  --secondary: rgba(212, 175, 55, 0.15);
+  --secondary-foreground: #d4af37;
   --muted: rgba(248, 250, 252, 0.1);
   --muted-foreground: #94a3b8;
   --accent: #d4af37;
   --accent-foreground: #0a0e1a;
   --destructive: #ef4444;
-  --border: rgba(16, 185, 129, 0.2);
+  --border: rgba(212, 175, 55, 0.2);
   --input: rgba(248, 250, 252, 0.1);
-  --ring: #10b981;
+  --ring: #d4af37;
 }
 
 @layer base {
@@ -115,63 +115,122 @@
   }
 }
 
+/* Hide default cursor on desktop */
+@media (min-width: 1024px) {
+  * {
+    cursor: none !important;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(10, 14, 26, 0.5);
+  background: #0a0e1a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #10b981, #059669);
-  border-radius: 4px;
+  background: linear-gradient(180deg, #d4af37, #b8962e);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #34d399, #10b981);
+  background: linear-gradient(180deg, #fbbf24, #d4af37);
 }
 
 /* Smooth scroll */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* GSAP handles smooth scroll */
 }
 
-/* Text gradient animation */
-.text-gradient-animate {
-  background: linear-gradient(135deg, #4ade80, #10b981, #d4af37, #10b981, #4ade80);
-  background-size: 300% 300%;
+/* Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: #fff;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(10, 14, 26, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #d4af37, #fbbf24, #d4af37);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientFlow 8s ease infinite;
+  animation: shimmer 3s linear infinite;
 }
 
-@keyframes gradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
-/* Glow effects */
-.glow-emerald {
-  box-shadow: 0 0 40px rgba(16, 185, 129, 0.3), 0 0 80px rgba(16, 185, 129, 0.1);
+/* Button hover effect */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
 }
 
-.glow-gold {
-  box-shadow: 0 0 40px rgba(212, 175, 55, 0.3), 0 0 80px rgba(212, 175, 55, 0.1);
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #d4af37, #fbbf24);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
-/* Glass morphism */
-.glass {
-  background: rgba(15, 25, 45, 0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+.btn-fill:hover::before {
+  transform: scaleX(1);
 }
 
-/* Magnetic button hover */
-.magnetic-btn {
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+/* Image grayscale hover */
+.img-grayscale {
+  filter: grayscale(100%);
+  transition: filter 0.7s ease;
+}
+
+.img-grayscale:hover {
+  filter: grayscale(0%);
+}
+
+/* Clip path animations */
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+.clip-reveal {
+  animation: clipReveal 1.2s ease-out forwards;
+}
+
+/* Text reveal */
+@keyframes textReveal {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.text-reveal {
+  animation: textReveal 0.8s ease-out forwards;
 }
 
 /* Floating animation */
@@ -180,38 +239,16 @@ html {
   50% { transform: translateY(-20px); }
 }
 
-.float-animation {
+.float {
   animation: float 6s ease-in-out infinite;
 }
 
-/* Shimmer effect */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Line expand */
+@keyframes lineExpand {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Premium card hover */
-.premium-card {
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.premium-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2), 0 0 100px rgba(16, 185, 129, 0.1);
-}
-
-/* Image reveal animation */
-.image-reveal {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.image-reveal.revealed {
-  clip-path: inset(0 0% 0 0);
+.line-expand {
+  animation: lineExpand 1s ease-out forwards;
 }

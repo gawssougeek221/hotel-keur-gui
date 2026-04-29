@@ -1,194 +1,182 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const rooms = [
   {
     id: 1,
-    name: 'Deluxe Room',
-    description: 'Chambre spacieuse avec vue imprenable sur le jardin tropical. Design contemporain alliant confort et élégance.',
+    name: 'Chambre Deluxe',
+    description: 'Élégance et confort dans un cadre sénégalais authentique. Vue sur les jardins luxuriants.',
     price: '150,000',
-    currency: 'CFA',
-    period: 'nuit',
     image: '/images/hotel/deluxe-room.png',
-    amenities: ['WiFi Gratuit', 'TV Écran Plat', 'Climatisation', 'Mini Bar'],
-    size: '45 m²',
-    bed: 'King Size'
+    size: '45 m²'
   },
   {
     id: 2,
     name: 'Suite Executive',
-    description: 'Suite premium avec salon privé et vue océan panoramique. L\'alliance parfaite du luxe et de l\'intimité.',
+    description: 'Luxe contemporain avec terrasse privée et vue panoramique sur l\'océan Atlantique.',
     price: '250,000',
-    currency: 'CFA',
-    period: 'nuit',
     image: '/images/hotel/executive-suite.png',
-    amenities: ['Jacuzzi Privé', 'Balcon Terrasse', 'Concierge 24/7', 'Petit Déj Inclus'],
-    size: '75 m²',
-    bed: 'King Size + Canapé'
+    size: '75 m²'
   },
   {
     id: 3,
-    name: 'Presidential Suite',
-    description: 'Luxe ultime avec tous les services haut de gamme. Une expérience d\'exception pour les voyageurs exigeants.',
+    name: 'Suite Présidentielle',
+    description: 'L\'excellence absolue. Piscine privée, chef personnel, et service dédié 24h/24.',
     price: '500,000',
-    currency: 'CFA',
-    period: 'nuit',
     image: '/images/hotel/presidential-suite.png',
-    amenities: ['Spa Privé', 'Piscine Personnelle', 'Chef Personnel', 'Service VIP'],
-    size: '150 m²',
-    bed: 'Super King Size'
+    size: '150 m²'
   }
 ]
 
 export default function HotelRooms() {
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.from(titleRef.current, {
+  useGSAP(() => {
+    // Title animation
+    gsap.from('.rooms-title', {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: '.rooms-title',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    // Room items animation
+    const roomItems = gsap.utils.toArray('.room-item')
+    roomItems.forEach((item, i) => {
+      const el = item as HTMLElement
+      
+      // Reveal animation
+      gsap.from(el, {
+        y: 120,
         opacity: 0,
-        y: 60,
         duration: 1,
+        delay: i * 0.15,
         scrollTrigger: {
-          trigger: titleRef.current,
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      })
+
+      // Image clip-path reveal
+      gsap.from(el.querySelector('.room-image-reveal'), {
+        clipPath: 'inset(100% 0% 0% 0%)',
+        duration: 1.2,
+        ease: 'power4.inOut',
+        scrollTrigger: {
+          trigger: el,
           start: 'top 80%',
           toggleActions: 'play none none reverse'
         }
       })
 
-      // Room cards animation
-      const cards = gsap.utils.toArray('.room-card')
-      cards.forEach((card, i) => {
-        gsap.from(card as Element, {
-          opacity: 0,
-          y: 100,
-          duration: 0.8,
-          delay: i * 0.15,
-          scrollTrigger: {
-            trigger: card as Element,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          }
-        })
+      // Parallax on image
+      gsap.to(el.querySelector('.room-image'), {
+        yPercent: -20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
       })
+    })
 
-      // Image parallax
-      gsap.utils.toArray('.room-image-container').forEach((img) => {
-        gsap.to((img as HTMLElement).querySelector('.room-image-inner'), {
-          yPercent: -20,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: img as Element,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-          }
-        })
-      })
-
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
+  }, { scope: sectionRef })
 
   return (
-    <section ref={sectionRef} className="py-24 px-4 bg-gradient-to-b from-[#0a0e1a] via-[#0f1629] to-[#0a0e1a]">
-      <div className="max-w-7xl mx-auto">
+    <section ref={sectionRef} id="rooms" className="py-32 px-4 md:px-8 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a] via-[#0d1f15] to-[#0a0e1a]" />
+      
+      {/* Decorative pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div ref={titleRef} className="text-center mb-16">
-          <span className="text-amber-400 text-sm tracking-[0.3em] uppercase mb-4 block">Hébergement</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-white">Nos </span>
-            <span className="text-gradient-animate">Chambres</span>
+        <div className="rooms-title text-center mb-20">
+          <span className="text-amber-400/60 text-xs tracking-[0.5em] uppercase block mb-4">Hébergement</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-wide">
+            Nos <span className="text-amber-400">Chambres</span>
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-            Découvrez nos espaces de vie d'exception, où chaque détail a été pensé pour votre confort absolu.
-          </p>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mt-8" />
         </div>
 
-        {/* Room Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {rooms.map((room) => (
+        {/* Room Grid */}
+        <div className="space-y-24 md:space-y-32">
+          {rooms.map((room, index) => (
             <div 
               key={room.id}
-              className="room-card group relative rounded-2xl overflow-hidden glass border border-emerald-500/20 hover:border-emerald-500/50 transition-all duration-500"
+              className={`room-item grid grid-cols-1 ${index % 2 === 0 ? 'lg:grid-cols-2' : 'lg:grid-cols-2'} gap-8 lg:gap-16 items-center`}
             >
               {/* Image */}
-              <div className="room-image-container relative h-64 overflow-hidden">
-                <img 
-                  src={room.image} 
-                  alt={room.name}
-                  className="room-image-inner w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-transparent to-transparent" />
+              <div className={`relative ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                <div className="room-image-reveal relative aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={room.image} 
+                    alt={room.name}
+                    className="room-image w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a]/80 via-transparent to-transparent" />
+                </div>
                 
-                {/* Price Badge */}
-                <div className="absolute top-4 right-4 glass px-4 py-2 rounded-full">
-                  <span className="text-emerald-400 font-bold">{room.price} {room.currency}</span>
-                  <span className="text-slate-400 text-sm">/{room.period}</span>
+                {/* Price tag */}
+                <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                  <div className="glass px-4 py-2">
+                    <span className="text-amber-400 text-xl font-light">{room.price}</span>
+                    <span className="text-white/50 text-xs ml-1">CFA/nuit</span>
+                  </div>
+                  <div className="text-white/40 text-xs tracking-wider">{room.size}</div>
                 </div>
 
-                {/* Size Badge */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white/80 text-sm">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                  </svg>
-                  <span>{room.size}</span>
+                {/* Number */}
+                <div className="absolute -top-4 -right-4 lg:-top-8 lg:-right-8 text-8xl lg:text-9xl font-thin text-amber-400/10">
+                  0{room.id}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+              <div className={`${index % 2 === 0 ? 'lg:order-2 lg:pl-8' : 'lg:order-1 lg:pr-8'}`}>
+                <span className="text-amber-400/60 text-xs tracking-[0.4em] uppercase block mb-4">
+                  Chambre {room.id}
+                </span>
+                <h3 className="text-3xl lg:text-4xl font-light text-white mb-6 tracking-wide">
                   {room.name}
                 </h3>
-                <p className="text-slate-400 text-sm mb-4 line-clamp-2">
+                <p className="text-white/50 leading-relaxed mb-8 text-lg">
                   {room.description}
                 </p>
-
-                {/* Amenities */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  {room.amenities.map((amenity, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-slate-300 text-sm">
-                      <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>{amenity}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <button className="w-full py-3 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30 text-emerald-400 font-semibold hover:bg-emerald-500/20 transition-all duration-300">
-                  Réserver
+                
+                <button 
+                  data-magnetic
+                  data-cursor-text="Détails"
+                  className="group flex items-center gap-4 text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  <span className="text-sm tracking-[0.2em] uppercase">Découvrir</span>
+                  <div className="w-12 h-px bg-amber-400 group-hover:w-20 transition-all duration-300" />
                 </button>
-              </div>
-
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 via-transparent to-amber-500/20 blur-xl" />
               </div>
             </div>
           ))}
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <button className="px-8 py-4 rounded-full border border-slate-600 text-slate-300 hover:border-emerald-500 hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 mx-auto">
-            <span>Voir Toutes Les Chambres</span>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
         </div>
       </div>
     </section>

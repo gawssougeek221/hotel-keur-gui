@@ -14,24 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Pearl Resort | Hôtel de Luxe 5 Étoiles - Dakar, Sénégal",
-  description: "Découvrez The Pearl Resort, un hôtel de luxe 5 étoiles à Dakar. Suites élégantes, spa premium, gastronomie raffinée et vue imprenable sur l'océan Atlantique.",
-  keywords: ["hôtel luxe Dakar", "resort 5 étoiles Sénégal", "spa hôtel Afrique", "séjour luxe Afrique", "The Pearl Resort"],
-  authors: [{ name: "The Pearl Resort" }],
+  title: "Hotel Keur Gui | Hôtel de Luxe 5 Étoiles - Dakar, Sénégal",
+  description: "Découvrez Hotel Keur Gui, un hôtel de luxe 5 étoiles à Dakar. L'excellence de l'hospitalité sénégalaise avec des suites élégantes, spa premium et vue sur l'océan Atlantique.",
+  keywords: ["hôtel luxe Dakar", "hôtel 5 étoiles Sénégal", "Keur Gui", "spa hôtel Afrique", "séjour luxe Sénégal"],
+  authors: [{ name: "Hotel Keur Gui" }],
   icons: {
     icon: "/logo.svg",
   },
   openGraph: {
-    title: "The Pearl Resort | Hôtel de Luxe 5 Étoiles",
-    description: "L'excellence de l'hôtellerie de luxe au cœur de l'Afrique",
-    url: "https://thepearlresort.com",
-    siteName: "The Pearl Resort",
+    title: "Hotel Keur Gui | Hôtel de Luxe 5 Étoiles",
+    description: "L'excellence de l'hospitalité sénégalaise au cœur de Dakar",
+    url: "https://hotelkeurgui.com",
+    siteName: "Hotel Keur Gui",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Pearl Resort | Hôtel de Luxe 5 Étoiles",
-    description: "L'excellence de l'hôtellerie de luxe au cœur de l'Afrique",
+    title: "Hotel Keur Gui | Hôtel de Luxe 5 Étoiles",
+    description: "L'excellence de l'hospitalité sénégalaise au cœur de Dakar",
   },
 };
 

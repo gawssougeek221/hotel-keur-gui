@@ -1,10 +1,12 @@
 'use client'
 
+import Preloader from '@/components/Preloader'
+import CustomCursor from '@/components/CustomCursor'
 import HotelNav from '@/components/HotelNav'
 import HotelHero from '@/components/HotelHero'
 import HotelRooms from '@/components/HotelRooms'
+import Marquee from '@/components/Marquee'
 import HotelAmenities from '@/components/HotelAmenities'
-import HotelFeatures from '@/components/HotelFeatures'
 import HotelGallery from '@/components/HotelGallery'
 import HotelTestimonials from '@/components/HotelTestimonials'
 import HotelContact from '@/components/HotelContact'
@@ -13,37 +15,35 @@ import HotelFooter from '@/components/HotelFooter'
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0a0e1a] text-white overflow-x-hidden">
+      {/* Preloader */}
+      <Preloader />
+      
+      {/* Custom Cursor */}
+      <CustomCursor />
+      
       {/* Navigation */}
       <HotelNav />
       
       {/* Hero Section */}
       <HotelHero />
       
+      {/* Marquee */}
+      <Marquee />
+      
       {/* Rooms Section */}
-      <div id="rooms">
-        <HotelRooms />
-      </div>
+      <HotelRooms />
       
-      {/* Features Section */}
-      <HotelFeatures />
-      
-      {/* Amenities Section */}
-      <div id="amenities">
-        <HotelAmenities />
-      </div>
+      {/* Amenities - Horizontal Scroll */}
+      <HotelAmenities />
       
       {/* Gallery Section */}
-      <div id="gallery">
-        <HotelGallery />
-      </div>
+      <HotelGallery />
       
-      {/* Testimonials Section */}
+      {/* Testimonials */}
       <HotelTestimonials />
       
       {/* Contact Section */}
-      <div id="contact">
-        <HotelContact />
-      </div>
+      <HotelContact />
       
       {/* Footer */}
       <HotelFooter />

@@ -15,33 +15,55 @@ export default function CustomCursor() {
     const cursorDot = cursorDotRef.current
     if (!cursor || !cursorDot) return
 
-    // Mouse move handler
+    // Mouse position
+    let mouseX = 0
+    let mouseY = 0
+
+    // Move cursor smoothly
     const moveCursor = (e: MouseEvent) => {
-      gsap.to(cursor, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.5,
-        ease: 'power2.out'
+      mouseX = e.clientX
+      mouseY = e.clientY
+
+      // Dot follows instantly
+      gsap.set(cursorDot, {
+        x: mouseX,
+        y: mouseY
       })
-      gsap.to(cursorDot, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1
+
+      // Ring follows with delay
+      gsap.to(cursor, {
+        x: mouseX,
+        y: mouseY,
+        duration: 0.15,
+        ease: 'power2.out'
       })
     }
 
-    // Magnetic effect for buttons and links
+    // Magnetic effect for buttons
     const handleMagneticEnter = (e: MouseEvent) => {
       const target = e.currentTarget as HTMLElement
       const rect = target.getBoundingClientRect()
       const x = e.clientX - rect.left - rect.width / 2
       const y = e.clientY - rect.top - rect.height / 2
-      
+
       gsap.to(target, {
-        x: x * 0.3,
-        y: y * 0.3,
+        x: x * 0.4,
+        y: y * 0.4,
         duration: 0.3,
         ease: 'power2.out'
+      })
+    }
+
+    const handleMagneticMove = (e: MouseEvent) => {
+      const target = e.currentTarget as HTMLElement
+      const rect = target.getBoundingClientRect()
+      const x = e.clientX - rect.left - rect.width / 2
+      const y = e.clientY - rect.top - rect.height / 2
+
+      gsap.to(target, {
+        x: x * 0.4,
+        y: y * 0.4,
+        duration: 0.1
       })
     }
 
@@ -55,7 +77,7 @@ export default function CustomCursor() {
       })
     }
 
-    // Hover handlers
+    // Hover effects
     const handleHoverEnter = (e: MouseEvent) => {
       const target = e.currentTarget as HTMLElement
       const text = target.dataset.cursorText || 'View'
@@ -64,10 +86,11 @@ export default function CustomCursor() {
       setCursorText(text)
       
       gsap.to(cursor, {
-        scale: 2.5,
-        backgroundColor: 'rgba(212, 175, 55, 0.2)',
+        scale: 3,
+        backgroundColor: 'rgba(212, 175, 55, 0.15)',
         borderColor: 'rgba(212, 175, 55, 0.8)',
-        duration: 0.3
+        duration: 0.3,
+        ease: 'power2.out'
       })
     }
 
@@ -79,44 +102,57 @@ export default function CustomCursor() {
         scale: 1,
         backgroundColor: 'transparent',
         borderColor: 'rgba(212, 175, 55, 0.5)',
-        duration: 0.3
+        duration: 0.3,
+        ease: 'power2.out'
       })
     }
 
-    // Add event listeners
+    // Event listeners
     window.addEventListener('mousemove', moveCursor)
 
-    // Add hover effects to interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, [data-cursor]')
-    interactiveElements.forEach(el => {
+    // Add effects to interactive elements
+    const magneticElements = document.querySelectorAll('[data-magnetic]')
+    const hoverElements = document.querySelectorAll('a, button, [data-cursor]')
+
+    magneticElements.forEach(el => {
+      el.addEventListener('mouseenter', handleMagneticEnter)
+      el.addEventListener('mousemove', handleMagneticMove)
+      el.addEventListener('mouseleave', handleMagneticLeave)
+    })
+
+    hoverElements.forEach(el => {
       el.addEventListener('mouseenter', handleHoverEnter)
       el.addEventListener('mouseleave', handleHoverLeave)
-      el.addEventListener('mousemove', handleMagneticEnter as any)
-      el.addEventListener('mouseleave', handleMagneticLeave)
     })
 
     return () => {
       window.removeEventListener('mousemove', moveCursor)
-      interactiveElements.forEach(el => {
+      magneticElements.forEach(el => {
+        el.removeEventListener('mouseenter', handleMagneticEnter)
+        el.removeEventListener('mousemove', handleMagneticMove)
+        el.removeEventListener('mouseleave', handleMagneticLeave)
+      })
+      hoverElements.forEach(el => {
         el.removeEventListener('mouseenter', handleHoverEnter)
         el.removeEventListener('mouseleave', handleHoverLeave)
-        el.removeEventListener('mousemove', handleMagneticEnter as any)
-        el.removeEventListener('mouseleave', handleMagneticLeave)
       })
     }
   }, [cursorText])
 
   return (
     <>
-      {/* Main cursor */}
+      {/* Cursor ring */}
       <div 
         ref={cursorRef}
-        className="fixed top-0 left-0 w-10 h-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-400/50 pointer-events-none z-[9998] hidden md:flex items-center justify-center mix-blend-difference"
-        style={{ willChange: 'transform' }}
+        className="fixed top-0 left-0 w-10 h-10 -translate-x-1/2 -translate-y-1/2 rounded-full border pointer-events-none z-[9998] hidden lg:flex items-center justify-center mix-blend-difference"
+        style={{ 
+          borderColor: 'rgba(212, 175, 55, 0.5)',
+          willChange: 'transform'
+        }}
       >
         <span 
           ref={cursorTextRef}
-          className={`text-[8px] font-bold text-white uppercase tracking-wider transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+          className={`text-[7px] font-bold text-white uppercase tracking-wider transition-opacity duration-200 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
         >
           {cursorText}
         </span>
@@ -125,8 +161,11 @@ export default function CustomCursor() {
       {/* Cursor dot */}
       <div 
         ref={cursorDotRef}
-        className="fixed top-0 left-0 w-2 h-2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 rounded-full pointer-events-none z-[9999] hidden md:block"
-        style={{ willChange: 'transform' }}
+        className="fixed top-0 left-0 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none z-[9999] hidden lg:block"
+        style={{ 
+          backgroundColor: '#d4af37',
+          willChange: 'transform'
+        }}
       />
     </>
   )

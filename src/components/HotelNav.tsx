@@ -12,7 +12,6 @@ export default function HotelNav() {
   const navRef = useRef<HTMLElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const pathname = usePathname()
 
   useGSAP(() => {
@@ -46,10 +45,10 @@ export default function HotelNav() {
   }, [])
 
   const navLinks = [
-    { name: 'Accueil', href: '/', label: '01' },
-    { name: 'Chambres', href: '/chambres', label: '02' },
-    { name: 'Restaurant', href: '/restaurant', label: '03' },
-    { name: 'Galerie', href: '/galerie', label: '04' },
+    { name: 'Accueil', href: '/' },
+    { name: 'Chambres', href: '/chambres' },
+    { name: 'Restaurant', href: '/restaurant' },
+    { name: 'Galerie', href: '/galerie' },
   ]
 
   const isActive = (href: string) => {
@@ -109,18 +108,7 @@ export default function HotelNav() {
                 className={`nav-link-item group relative px-5 py-3 transition-all duration-300 ${
                   isActive(link.href) ? 'opacity-100' : 'opacity-70 hover:opacity-100'
                 }`}
-                onMouseEnter={() => setHoveredLink(link.name)}
-                onMouseLeave={() => setHoveredLink(null)}
               >
-                {/* Number label */}
-                <span className={`absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-mono transition-all duration-300 ${
-                  isActive(link.href) || hoveredLink === link.name
-                    ? 'text-amber-400 opacity-100'
-                    : 'text-white/30 opacity-0 group-hover:opacity-100'
-                }`}>
-                  {link.label}
-                </span>
-
                 {/* Link text */}
                 <span className={`relative text-sm tracking-[0.2em] uppercase font-light transition-colors duration-300 ${
                   isActive(link.href) 
@@ -240,16 +228,11 @@ export default function HotelNav() {
               >
                 <Link 
                   href={link.href}
-                  className={`group flex items-center gap-6 py-4 ${
+                  className={`group flex items-center py-4 ${
                     isActive(link.href) ? 'opacity-100' : 'opacity-60 hover:opacity-100'
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {/* Number */}
-                  <span className="text-amber-400 font-mono text-sm">
-                    {link.label}
-                  </span>
-                  
                   {/* Text */}
                   <span className={`text-3xl font-light tracking-[0.15em] uppercase transition-colors duration-300 ${
                     isActive(link.href) 
